@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase-client'
 import { Mail, CheckCircle } from 'lucide-react'
 import { use } from 'react'
 

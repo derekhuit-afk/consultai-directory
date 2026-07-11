@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase'
 import Link from 'next/link'
 import { AlertTriangle, CheckCircle } from 'lucide-react'
 
