@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { createServerSupabaseClient } from '@/lib/supabase'
-import { CATEGORIES, SITE_NAME } from '@/lib/constants'
+import { CATEGORIES } from '@/lib/constants'
 import ListingCard from '@/components/directory/ListingCard'
 import FilterBar from '@/components/directory/FilterBar'
 import { Listing } from '@/types'
@@ -11,12 +11,7 @@ export const metadata: Metadata = {
   description: 'Find verified AI automation consultants across workflow automation, AI integration, data analytics, AI copywriting, and strategy.',
 }
 
-interface SearchParams {
-  availability?: string
-  price?: string
-  delivery?: string
-  tool?: string
-}
+type SearchParams = Record<string, string | undefined>
 
 async function getListings(params: SearchParams): Promise<Listing[]> {
   const supabase = await createServerSupabaseClient()
