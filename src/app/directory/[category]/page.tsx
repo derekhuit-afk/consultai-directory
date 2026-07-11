@@ -8,12 +8,12 @@ import FilterBar from '@/components/directory/FilterBar'
 import { Listing } from '@/types'
 
 interface Props {
-  params: Promise<{ category: string }>
-  searchParams: Promise<Record<string, string | undefined>>
+  params: { category: string }
+  searchParams: Record<string, string | undefined>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { category } = await params
+  const { category } = params
   const cat = CATEGORIES.find(c => c.slug === category)
   if (!cat) return {}
 
@@ -62,8 +62,8 @@ const stateToSlug: Record<string, string> = {
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
-  const { category } = await params
-  const sp = await searchParams
+  const { category } = params
+  const sp = searchParams
   const cat = CATEGORIES.find(c => c.slug === category)
   if (!cat) notFound()
 

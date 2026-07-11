@@ -8,7 +8,7 @@ import { MapPin, Clock, Star, CheckCircle, ExternalLink, Linkedin } from 'lucide
 import InquiryForm from '@/components/directory/InquiryForm'
 
 interface Props {
-  params: Promise<{ category: string; slug: string }>
+  params: { category: string; slug: string }
 }
 
 async function getListing(slug: string): Promise<Listing | null> {
@@ -24,7 +24,7 @@ async function getReviews(listingId: string): Promise<Review[]> {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
+  const { slug } = params
   const listing = await getListing(slug)
   if (!listing) return {}
   return {
@@ -41,7 +41,7 @@ const availabilityConfig = {
 }
 
 export default async function ListingPage({ params }: Props) {
-  const { category, slug } = await params
+  const { category, slug } = params
   const [listing, cat] = await Promise.all([
     getListing(slug),
     Promise.resolve(CATEGORIES.find(c => c.slug === category)),

@@ -2,10 +2,13 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase-client'
 import { Mail, CheckCircle } from 'lucide-react'
-import { use } from 'react'
 
-export default function ClaimPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params)
+interface Props {
+  params: { slug: string }
+}
+
+export default function ClaimPage({ params }: Props) {
+  const { slug } = params
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -26,8 +29,7 @@ export default function ClaimPage({ params }: { params: Promise<{ slug: string }
       if (authError) throw authError
       setSent(true)
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Something went wrong.'
-      setError(message)
+      setError(err instanceof Error ? err.message : 'Something went wrong.')
     } finally {
       setLoading(false)
     }
@@ -39,8 +41,7 @@ export default function ClaimPage({ params }: { params: Promise<{ slug: string }
         <CheckCircle size={32} className="text-lime mx-auto mb-4" />
         <h1 className="text-xl font-semibold text-parchment mb-2">Check your email</h1>
         <p className="text-sm text-muted">
-          We sent a magic link to <strong className="text-parchment">{email}</strong>.
-          Click it to verify ownership and access your dashboard.
+          Magic link sent to <strong className="text-parchment">{email}</strong>. Click it to verify and access your dashboard.
         </p>
       </div>
     )
@@ -54,13 +55,15 @@ export default function ClaimPage({ params }: { params: Promise<{ slug: string }
         </div>
         <h1 className="text-xl font-semibold text-parchment">Claim your listing</h1>
         <p className="mt-2 text-sm text-muted">
-          Enter the email address associated with your business. We'll send a verification link to confirm ownership.
+          Enter your business email. We will send a verification link to confirm ownership.
         </p>
       </div>
 
       <div className="rounded-lg border border-border bg-panel p-6 space-y-4">
         <div>
-          <label className="text-[10px] uppercase tracking-wider text-ghost mb-1.5 block">Business email</label>
+          <label className="text-[10px] uppercase tracking-wider text-ghost mb-1.5 block">
+            Business email
+          </label>
           <input
             type="email"
             value={email}
@@ -68,9 +71,6 @@ export default function ClaimPage({ params }: { params: Promise<{ slug: string }
             className="w-full rounded border border-border bg-slate px-3 py-2.5 text-sm text-parchment placeholder:text-muted focus:border-signal focus:outline-none"
             placeholder="you@yourcompany.com"
           />
-          <p className="mt-1.5 text-[10px] text-muted">
-            Use a domain email where possible — it speeds up verification.
-          </p>
         </div>
 
         {error && <p className="text-xs text-ember">{error}</p>}
@@ -83,9 +83,8 @@ export default function ClaimPage({ params }: { params: Promise<{ slug: string }
           {loading ? 'Sending...' : 'Send verification link'}
         </button>
 
-        <p className="text-[10px] text-muted text-center leading-relaxed">
-          By claiming a listing you confirm you are authorized to represent this business.
-          Listing slug: <span className="font-mono text-ghost">{slug}</span>
+        <p className="text-[10px] text-muted text-center">
+          Listing: <span className="font-mono text-ghost">{slug}</span>
         </p>
       </div>
     </div>

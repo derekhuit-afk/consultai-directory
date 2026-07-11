@@ -46,7 +46,7 @@ export default function ListingCard({ listing, categorySlug, stateSlug }: Props)
                 {listing.business_name}
               </h3>
               {listing.verified_status && (
-                <CheckCircle size={13} className="text-lime flex-shrink-0" title="Verified listing" />
+                <CheckCircle size={13} className="text-lime flex-shrink-0" />
               )}
               {listing.tier === 'pro' && (
                 <span className="rounded-sm border border-signal/40 px-1.5 py-0.5 text-[10px] font-medium text-signal flex-shrink-0">

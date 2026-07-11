@@ -30,8 +30,8 @@ async function getListings(params: SearchParams): Promise<Listing[]> {
   return data || []
 }
 
-export default async function DirectoryPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
-  const params = await searchParams
+export default async function DirectoryPage({ searchParams }: { searchParams: SearchParams }) {
+  const params = searchParams
   const listings = await getListings(params)
 
   return (
